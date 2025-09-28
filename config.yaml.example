@@ -1,0 +1,51 @@
+# minio2rustfs 配置文件示例
+
+# 源存储配置 (MinIO)
+source:
+  endpoint: http://localhost:9000        # MinIO 端点
+  access_key: minioadmin                 # MinIO 访问密钥
+  secret_key: minioadmin                 # MinIO 密钥
+  secure: false                          # 是否使用 HTTPS
+
+# 目标存储配置 (RustFS)
+target:
+  endpoint: https://rustfs.example.com   # RustFS 端点
+  access_key: your_rustfs_access_key     # RustFS 访问密钥
+  secret_key: your_rustfs_secret_key     # RustFS 密钥
+  secure: true                           # 是否使用 HTTPS
+
+# 迁移配置
+migration:
+  bucket: my-bucket                      # 要迁移的存储桶名称
+  prefix: ""                             # 对象前缀过滤器（可选）
+  object: ""                             # 单个对象键（可选，与prefix互斥）
+  concurrency: 16                        # 并发worker数量
+  multipart_threshold: 104857600          # 多部分上传阈值 (100MB)
+  part_size: 67108864                     # 多部分分片大小 (64MB)
+  retries: 5                             # 最大重试次数
+  retry_backoff_ms: 500                  # 初始重试退避时间（毫秒）
+  dry_run: false                         # 是否为演练模式
+  checkpoint: ./checkpoint.db            # 检查点数据库文件路径
+  skip_existing: true                    # 跳过已存在且匹配的对象
+  resume: false                          # 是否从检查点恢复
+  show_progress: true                    # 是否显示进度（dry-run模式下自动禁用）
+
+# 日志级别 (debug/info/warn/error)
+log_level: info
+
+# 配置说明：
+#
+# 1. 性能调优：
+#    - concurrency: 根据网络带宽和系统资源调整，通常为CPU核数的2-4倍
+#    - multipart_threshold: 大于此大小的文件将使用多部分上传
+#    - part_size: 多部分上传的分片大小，建议64MB-256MB
+#
+# 2. 安全设置：
+#    - 生产环境建议使用HTTPS (secure: true)
+#    - 定期轮换访问密钥
+#    - 不要在版本控制中提交真实的密钥
+#
+# 3. 恢复设置：
+#    - checkpoint: 指定检查点数据库文件位置
+#    - resume: 设置为true以从上次中断处继续
+#    - skip_existing: 跳过已存在且内容匹配的对象，提高效率

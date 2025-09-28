@@ -7,6 +7,10 @@
 *.dll
 *.so
 *.dylib
+build
+build/*
+migrate_checkpoint.db
+config.yaml
 
 # Test binary, built with `go test -c`
 *.test
