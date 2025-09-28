@@ -1,5 +1,6 @@
 # MinIO to RustFS Migration Tool
 
+![image](/images/image.png)
 一个高性能、可恢复的对象迁移工具，用于将对象从 MinIO 迁移到 RustFS（S3 兼容存储）。
 
 ## 特性
@@ -366,3 +367,7 @@ docker build -t minio2rustfs .
 ## 许可证
 
 MIT License
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=renky1025/minio2rustfs&type=Date)](https://star-history.com/#renky1025/minio2rustfs&Date)
